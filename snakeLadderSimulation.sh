@@ -9,26 +9,32 @@ ladder=1
 snake=2
 
 #Repeating till player reaches the winning position
-for (( i=0;i<100;i++ ))
+while [[ $position_of_player -lt 100 ]]
 do
 	diceNo=$(((RANDOM%6)+1))
 	option=$((RANDOM%3))
 	case $option in
 			$noPlay)
-				position_of_player=$((position_of_player))
+				position_of_player=$position_of_player
 				;;
 			$ladder)
-				position_of_player=$((position_of_player+diceNo))
+				res=$((position_of_player+diceNo))
+				if [[ $res -gt 100 ]]
+				then
+					position_of_player=$position_of_player
+				else
+					position_of_player=$(($position_of_player+$diceNo))
+				fi
 				;;
 			$snake)
-				position_of_player=$((position_of_player-diceNo))
+				if [[ $position_of_player -lt $diceNo ]]
+				then
+					position_of_player=$position_of_player
+				else
+					position_of_player=$(($position_of_player-$diceNo))
+				fi
 				;;
 	esac
-	echo $position_of_player
-	if [[ $position_of_player -lt 0 ]]
-	then
-		position_of_player=0
-	fi
 done
 
 
