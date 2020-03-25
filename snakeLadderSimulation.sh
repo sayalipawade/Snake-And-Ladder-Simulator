@@ -9,7 +9,9 @@ ladder=1
 snake=2
 win=0
 
-#Repeating till player reaches the winning position
+#Function for playing game
+function playGame()
+{
 declare -A array
 while [[ $position_of_player -lt 100 ]]
 do
@@ -40,5 +42,19 @@ do
 	esac
 array[$win]=$position_of_player
 done
-echo "$win"					
-echo "${array[@]}"
+echo $win
+}
+
+#Game for two player
+player1=$( playGame )
+echo $player1
+
+player2=$( playGame )
+echo $player2
+
+if [[ $player1 -lt $player2 ]]
+then
+	echo "player1 won"
+else
+	echo "player2  won"
+fi
